@@ -1,0 +1,40 @@
+To create a Makefile you need Premake.
+
+ - Getting Premake
+
+If you don’t have Premake already, download it now http://premake.sourceforge.net/download
+
+Premake is a small (around 150K) command-line executable. Unpack it and put it on your system search path or anywhere convenient.
+
+ - Using Premake
+
+The simplest Premake command is
+
+$ premake --target toolset
+Where toolset is one of:
+
+vs2008	 Visual Studio 2008 (experimental)
+vs2005	 Visual Studio 2005 (or Express)
+vs2003	 Visual Studio 2003
+vs2002	 Visual Studio 2002
+vs6	     Visual Studio 6
+gnu	     GNU Make makefiles
+sharpdev SharpDevelop
+monodev	 MonoDevelop
+cb-gcc	 Code::Blocks with GCC
+cb-ow	 Code::Blocks with Open Watcom C/C++
+cl-gcc	 CodeLite with GCC
+
+You can see a complete list of options by typing
+
+$ premake --help
+In addition to the built-in options, your software project may also have one or more custom options; these will be displayed at the end of the list. You can specify options by listing them before the target, like this:
+
+$ premake --dotnet mono2 --target gnu
+If at some point you decide that you would like to remove all of the project files and intermediate objects and start again, you can use this command:
+
+$ premake --clean
+
+To regenerate Makefile use the following commands:
+$ premake4 clean
+$ premake4 gmake
