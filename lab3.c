@@ -61,7 +61,7 @@ int settlement(hostel * p, queue * s1)
         return 0;
     }
     puts(str1);
-    printf("\n\n %s",&str1);
+    printf("\n\n %s",str1);
     my_fgets(str2, 4, file);
     n = atoi(str2);
     while (1) {
