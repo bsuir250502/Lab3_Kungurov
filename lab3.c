@@ -134,11 +134,21 @@ int main(int argc, char **argv)
     if (argc == 2) {
         if ((strcmp(argv[1], "-h")) == 0) {
             puts("Instructions for use:");
-            puts("1.Run the program");
-            puts("2.Enter the information that you require from the program");
-            puts("If you enter the names of tenants you want to enter less than the available space at the end of write 'end'");
-            puts("3.Next, enter the names of the students who need to settle.");
-            puts("If there are no beds in the dormitory, the student will be brought to the queue for the settlement.");
+            puts("Open test.txt in the program's folder");
+            puts("2.Enter the information in the following format (for 3 floors): ");
+            puts("floor");
+            puts("number of places");
+            puts("number of free places");
+            puts("surname of student (every name on a new line. If you want to enter the names of less than the number of available seats, enter 'end')");
+            puts("floor");
+            puts("number of places");
+            puts("number of free places");
+            puts("surname of student (every name on a new line. If you want to enter the names of less than the number of available seats, enter 'end')");
+            puts("floor");
+            puts("number of places");
+            puts("number of free places");
+            puts("surname of student (every name on a new line. If you want to enter the names of less than the number of available seats, enter 'end')");
+            puts("surname of student to settlement (every name on a new line. If you want to enter the names of less than the number of available seats, enter 'end')");
             return 0;
         }
     }
