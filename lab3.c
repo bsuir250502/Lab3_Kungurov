@@ -1,19 +1,22 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 #include "mystdlib.h"
 #define number_of_floors 3
-#define number_of_places 10
+#define number_of_places 4
 #define size_surname 15
 FILE *file;
 typedef struct hostel {
     int floor;
     int places;
     int free_places;
-    char list[number_of_places][size_surname];
+    char list[number_of_places][size_surname+4];
     struct hostel *next;
 } hostel;
 typedef struct queue {
     char surname[size_surname];
-    int facult;
     struct queue *next;
 } queue;
 void enter_data_hostel(hostel * floor_queue_first)
@@ -32,8 +35,12 @@ void enter_data_hostel(hostel * floor_queue_first)
     printf("Enter number of free places");
     my_fgets(str, 10, file);
     floor_queue_first->free_places = atoi(str);
-    for (j = 0; j < (floor_queue_first->places - floor_queue_first->free_places); j++)
-        my_fgets(floor_queue_first->list[j], size_surname, file);
+    for (j = 0; floor_queue_first->free_places ; j++){
+        my_fgets(str, size_surname, file);
+		if (strcmp("end",str)==0) { break;}
+		strcpy(floor_queue_first->list[j],str);
+		floor_queue_first->free_places-=1;
+	}
     for (i = 0; i < (number_of_floors - 1); i++) {
         floor_queue_current = floor_queue_current->next = (hostel *) calloc(1, sizeof(hostel));
         printf("Enter floor");
@@ -45,49 +52,49 @@ void enter_data_hostel(hostel * floor_queue_first)
         printf("Enter number of free places");
         my_fgets(str, 10, file);
         floor_queue_current->free_places = atoi(str);
-        for (j = 0; j < ((floor_queue_current->places) - (floor_queue_current->free_places)); j++)
-            my_fgets(floor_queue_current->list[j], size_surname, file);
+        for (j = 0;floor_queue_current->free_places ; j++){
+			my_fgets(str, size_surname, file);
+			if (strcmp("end",str)==0) { break;}
+			strcpy(floor_queue_current->list[j],str);
+			floor_queue_current->free_places-=1;
+		}
     }
+    floor_queue_current -> next = NULL;
 }
 
 int settlement(hostel * floor_queue_first, queue * settelment_queue_current)
 {
-    char str1[size_surname + 3], str2[5];
-    int n;
+    char *str1;
     hostel *floor_queue_current;
+	str1 = (char*)calloc(size_surname+3,sizeof(char));
     floor_queue_current = floor_queue_first;
     if (!strcmp("end", my_fgets(str1, size_surname + 4, file))) {
-        printf("Найден end");
         return 0;
     }
-    puts(str1);
-    printf("\n\n %s",str1);
-    my_fgets(str2, 4, file);
-    n = atoi(str2);
     while (1) {
-        if (floor_queue_current->floor == n) {
+        if (floor_queue_current->free_places > 0) {
             break;
         }
+        if (floor_queue_current -> next == NULL) {
+            break;}
         floor_queue_current = floor_queue_current->next;
-        if (floor_queue_current == NULL) {
-            return 0;
-        }
     }
-    if (floor_queue_current->free_places > 0) {
-        puts("\nOOOGOGOGOGOGO\n");
-        strcpy(floor_queue_current->list[(floor_queue_current->places) - (floor_queue_current->free_places)], str1);
-        floor_queue_current->free_places -= 1;
-        return 1;
-    }
-    else {
+    if (floor_queue_current -> next == NULL) {
         while (1) {
             if (settelment_queue_current->next == NULL) {
                 strcpy(settelment_queue_current->surname, str1);
-                settelment_queue_current->facult = n;
                 settelment_queue_current = settelment_queue_current->next = (queue *) calloc(1, sizeof(queue));
                 break;
             }
+            else {
+                settelment_queue_current = settelment_queue_current -> next;
+            }
         }
+        return 1;
+    }
+    else {
+        strcpy(floor_queue_current->list[(floor_queue_current->places) - (floor_queue_current->free_places)], str1);
+        floor_queue_current->free_places -= 1;
         return 1;
     }
 }
@@ -99,21 +106,21 @@ void display_hostel(hostel * floor_queue_first, queue * settelment_queue_first)
     int i, j;
     floor_queue_current = floor_queue_first;
     settelment_queue_current = settelment_queue_first;
-    printf("floor: %d\n", floor_queue_first->floor);
-    printf("number of places: %d\n", floor_queue_first->places);
-    printf("number of free places: %d\n", floor_queue_first->free_places);
+    printf("    floor: %d\n", floor_queue_first->floor);
+    printf("    number of places: %d\n", floor_queue_first->places);
+    printf("    number of free places: %d\n", floor_queue_first->free_places);
     for (j = 0; j < (floor_queue_first->places - floor_queue_first->free_places); j++)
         puts(floor_queue_first->list[j]);
     for (i = 0; i < (number_of_floors - 1); i++) {
         floor_queue_current = floor_queue_current->next;
-        printf("floor: %d\n", floor_queue_current->floor);
-        printf("number of places: %d\n", floor_queue_current->places);
-        printf("number of free places: %d\n", floor_queue_current->free_places);
+        printf("    floor: %d\n", floor_queue_current->floor);
+        printf("    number of places: %d\n", floor_queue_current->places);
+        printf("    number of free places: %d\n", floor_queue_current->free_places);
         for (j = 0; j < (floor_queue_current->places - floor_queue_current->free_places); j++) {
             puts(floor_queue_current->list[j]);
         }
     }
-    puts("string of stud");
+    puts("	List of students:");
     while(settelment_queue_current -> next != NULL){
         puts(settelment_queue_current -> surname);
         settelment_queue_current = settelment_queue_current -> next;
@@ -124,7 +131,7 @@ int main(int argc, char **argv)
 {
     hostel *floor_queue_first, *floor_queue_current;
     queue *settelment_queue_first, *settelment_queue_current;
-    int i;
+	puts(*argv);
     if (argc == 2) {
         if ((strcmp(argv[1], "-h")) == 0) {
             puts("Instructions for use:");
@@ -133,7 +140,7 @@ int main(int argc, char **argv)
             return 0;
         }
     }
-    if (!(file = fopen("test.txt", "r")))
+    if (!(file = fopen("test.txt", "rt")))
         puts("NOOOOOOOOB");
 
     else
@@ -141,10 +148,7 @@ int main(int argc, char **argv)
     settelment_queue_first = (queue *) calloc(1, sizeof(queue));
     settelment_queue_current = settelment_queue_first;
     floor_queue_first = (hostel *) calloc(1, sizeof(hostel));
-    floor_queue_current = floor_queue_first->next = (hostel *) calloc(1, sizeof(hostel));
-    for (i = 0; i < (number_of_floors - 3); i++)
-        floor_queue_current = floor_queue_current->next = (hostel *) calloc(1, sizeof(hostel));
-    floor_queue_current->next = NULL;
+    floor_queue_current = floor_queue_first;
     enter_data_hostel(floor_queue_first);
     while (1) {
         if (!settlement(floor_queue_first, settelment_queue_current)) {
@@ -155,3 +159,7 @@ int main(int argc, char **argv)
     fclose(file);
     return 0;
 }
+
+#ifdef __cplusplus
+}
+#endif
