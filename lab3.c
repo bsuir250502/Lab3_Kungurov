@@ -120,7 +120,7 @@ void display_hostel(hostel * floor_queue_first, queue * settelment_queue_first)
             puts(floor_queue_current->list[j]);
         }
     }
-    puts("	List of students:");
+    puts("    List of students:");
     while(settelment_queue_current -> next != NULL){
         puts(settelment_queue_current -> surname);
         settelment_queue_current = settelment_queue_current -> next;
@@ -131,12 +131,14 @@ int main(int argc, char **argv)
 {
     hostel *floor_queue_first, *floor_queue_current;
     queue *settelment_queue_first, *settelment_queue_current;
-	puts(*argv);
     if (argc == 2) {
         if ((strcmp(argv[1], "-h")) == 0) {
             puts("Instructions for use:");
-
-            /* any instuctions */
+            puts("1.Run the program");
+            puts("2.Enter the information that you require from the program");
+            puts("If you enter the names of tenants you want to enter less than the available space at the end of write 'end'");
+            puts("3.Next, enter the names of the students who need to settle.");
+            puts("If there are no beds in the dormitory, the student will be brought to the queue for the settlement.");
             return 0;
         }
     }
