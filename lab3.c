@@ -8,6 +8,8 @@ extern "C" {
 #define number_of_places 4
 #define size_surname 15
 FILE *file;
+
+
 typedef struct hostel {
     int floor;
     int places;
@@ -19,6 +21,8 @@ typedef struct queue {
     char surname[size_surname];
     struct queue *next;
 } queue;
+
+
 void enter_data_hostel(hostel * floor_queue_first)
 {
     char *str;
@@ -35,7 +39,7 @@ void enter_data_hostel(hostel * floor_queue_first)
     printf("Enter number of free places");
     my_fgets(str, 10, file);
     floor_queue_first->free_places = atoi(str);
-    for (j = 0; floor_queue_first->free_places ; j++){
+    for (j = 0; floor_queue_first->free_places != 0 ; j++){
         my_fgets(str, size_surname, file);
 		if (strcmp("end",str)==0) { break;}
 		strcpy(floor_queue_first->list[j],str);
@@ -52,7 +56,7 @@ void enter_data_hostel(hostel * floor_queue_first)
         printf("Enter number of free places");
         my_fgets(str, 10, file);
         floor_queue_current->free_places = atoi(str);
-        for (j = 0;floor_queue_current->free_places ; j++){
+        for (j = 0;floor_queue_current->free_places != 0 ; j++){
 			my_fgets(str, size_surname, file);
 			if (strcmp("end",str)==0) { break;}
 			strcpy(floor_queue_current->list[j],str);
@@ -66,9 +70,10 @@ int settlement(hostel * floor_queue_first, queue * settelment_queue_current)
 {
     char *str1;
     hostel *floor_queue_current;
-	str1 = (char*)calloc(size_surname+3,sizeof(char));
+	str1 = (char*)calloc(size_surname,sizeof(char));
     floor_queue_current = floor_queue_first;
-    if (!strcmp("end", my_fgets(str1, size_surname + 4, file))) {
+    my_fgets(str1, size_surname, file);
+    if (!strcmp("end", str1)) {
         return 0;
     }
     while (1) {
@@ -149,6 +154,7 @@ int main(int argc, char **argv)
             puts("number of free places");
             puts("surname of student (every name on a new line. If you want to enter the names of less than the number of available seats, enter 'end')");
             puts("surname of student to settlement (every name on a new line. If you want to enter the names of less than the number of available seats, enter 'end')");
+            puts("Save and run program");
             return 0;
         }
     }

@@ -1,19 +1,19 @@
 /* -*- coding: utf-8-dos -*- */
 #include "mystdlib.h"
 #define input_buffer_length 31
-char *my_fgets(char *buf, size_t buf_size, FILE *file)
+void my_fgets(char *buf, size_t buf_size, FILE *file)
 {
     fgets(buf, buf_size, file);
     buf[strlen(buf) - 1] = '\0';
-    return buf;
 }
 
-char *my_gets(char *buf, size_t buf_size)
+void my_gets(char *buf, size_t buf_size)
 {
-return my_fgets(buf,buf_size,stdin);
+    fgets(buf, buf_size, stdin);
+    buf[strlen(buf) - 1] = '\0';
 }
 
-int read_number()
+/*int read_number()
 {
     error_tm err;
     long int result;
@@ -41,4 +41,4 @@ int parse_number(const char *str, error_tm * err)
         *err = INVALID_INPUT;
     }
     return result;
-}
+}*/
