@@ -1,4 +1,4 @@
-OBJ = source.o
+OBJ = mystdlib.o lab3.o
 CFLAGS = -Wall -std=c99
 
 all: bin
