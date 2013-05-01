@@ -32,7 +32,7 @@ extern "C" {
         int i, j;
         str = (char *) calloc(12, sizeof(char));
         for (i = 0; i < (number_of_floors); i++) {
-            enter_info(&floor_queue_current->places);
+            enter_info(&floor_queue_current->floor);
             enter_info(&floor_queue_current->places);
             enter_info(&floor_queue_current->free_places);
             for (j = 0; floor_queue_current->free_places != 0; j++) {
