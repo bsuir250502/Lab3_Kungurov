@@ -27,7 +27,9 @@ extern "C" {
          str = (char *) calloc(12, sizeof(char));
          my_fgets(str, 5, file);
         *target = atoi(str);
-    } void enter_data_hostel(hostel * floor_queue_current) {
+    }
+    
+    void enter_data_hostel(hostel * floor_queue_current) {
         char *str;
         int i, j;
         str = (char *) calloc(12, sizeof(char));
@@ -170,6 +172,8 @@ extern "C" {
         }
         display_hostel(floor_queue_first, settelment_queue_first);
         fclose(file);
+        free(settelment_queue_first);
+        free(floor_queue_first);
         return 0;
     }
 
