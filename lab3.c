@@ -1,13 +1,9 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <stdio.h>
 #include "mystdlib.h"
 #define number_of_floors 3
 #define number_of_places 4
 #define size_surname 15
-    FILE *file;
+FILE *file;
 
 
     typedef struct hostel {
@@ -28,29 +24,28 @@ extern "C" {
          my_fgets(str, 5, file);
         *target = atoi(str);
         free(str);
-    }
+    } 
     
     void enter_data_hostel(hostel * floor_queue_current) {
-        char *str;
         int i, j;
-        str = (char *) calloc(12, sizeof(char));
+        char str[12];
         for (i = 0; i < (number_of_floors); i++) {
             enter_info(&floor_queue_current->floor);
             enter_info(&floor_queue_current->places);
             enter_info(&floor_queue_current->free_places);
             for (j = 0; floor_queue_current->free_places != 0; j++) {
                 my_fgets(str, size_surname, file);
-                if (strcmp("end", str) == 0) {
+                if (strcmp("end\n", str) == 0) {
                     break;
                 }
                 strcpy(floor_queue_current->list[j], str);
                 floor_queue_current->free_places -= 1;
             }
-            floor_queue_current = floor_queue_current->next =
-                (hostel *) calloc(1, sizeof(hostel));
+            floor_queue_current->next = (hostel *) calloc(1, sizeof(hostel));
+            floor_queue_current = floor_queue_current->next;
         }
+
         floor_queue_current = NULL;
-        free(str);
     }
 
     int settlement(hostel * floor_queue_first,
@@ -204,6 +199,3 @@ extern "C" {
         return 0;
     }
 
-#ifdef __cplusplus
-}
-#endif

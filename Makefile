@@ -1,5 +1,5 @@
 OBJ = mystdlib.o lab3.o
-CFLAGS = -Wall -std=c99
+CFLAGS = -Wall -Wextra -std=c99
 
 all: bin
 
