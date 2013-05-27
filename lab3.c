@@ -161,7 +161,6 @@ int main(int argc, char **argv)
     if (!(file = fopen("test.txt", "rt"))) {
         puts("File is not opened");
     }
-
     else {
         puts("");
     }
