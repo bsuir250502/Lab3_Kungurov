@@ -27,6 +27,7 @@ extern "C" {
          str = (char *) calloc(12, sizeof(char));
          my_fgets(str, 5, file);
         *target = atoi(str);
+        free(str);
     }
     
     void enter_data_hostel(hostel * floor_queue_current) {
@@ -49,6 +50,7 @@ extern "C" {
                 (hostel *) calloc(1, sizeof(hostel));
         }
         floor_queue_current = NULL;
+        free(str);
     }
 
     int settlement(hostel * floor_queue_first,
@@ -59,6 +61,7 @@ extern "C" {
         floor_queue_current = floor_queue_first;
         my_fgets(str1, size_surname, file);
         if (!strcmp("end", str1)) {
+            free(str1);
             return 0;
         }
         while (1) {
@@ -83,14 +86,17 @@ extern "C" {
                         settelment_queue_current->next;
                 }
             }
+            free(str1);
             return 1;
         } else {
             strcpy(floor_queue_current->
                    list[(floor_queue_current->places) -
                         (floor_queue_current->free_places)], str1);
             floor_queue_current->free_places -= 1;
+            free(str1);
             return 1;
         }
+        free(str1);
     }
 
     void display_hostel(hostel * floor_queue_first,
@@ -128,6 +134,27 @@ extern "C" {
             puts(settelment_queue_current->surname);
             settelment_queue_current = settelment_queue_current->next;
         }
+    }
+
+    void free_hostel(hostel *pointer)
+    {
+        if(pointer -> next != NULL)
+        {
+            free_hostel(pointer -> next);
+        }
+        free(pointer);
+
+    }
+
+
+    void free_queue(queue *pointer)
+    {
+        if(pointer -> next != NULL)
+        {
+            free_queue(pointer -> next);
+        }
+        free(pointer);
+
     }
 
     int main(int argc, char **argv) {
@@ -172,8 +199,8 @@ extern "C" {
         }
         display_hostel(floor_queue_first, settelment_queue_first);
         fclose(file);
-        free(settelment_queue_first);
-        free(floor_queue_first);
+        free_queue(settelment_queue_first);
+        free_hostel(floor_queue_first);
         return 0;
     }
 
