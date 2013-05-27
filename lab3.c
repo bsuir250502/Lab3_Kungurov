@@ -59,13 +59,7 @@ FILE *file;
             free(str1);
             return 0;
         }
-        while (1) {
-            if (floor_queue_current->free_places > 0) {
-                break;
-            }
-            if (floor_queue_current->next == NULL) {
-                break;
-            }
+        while (floor_queue_current->free_places <= 0 && floor_queue_current->next != NULL ) {
             floor_queue_current = floor_queue_current->next;
         }
         if (floor_queue_current->next == NULL) {
@@ -187,11 +181,7 @@ FILE *file;
         floor_queue_first = (hostel *) calloc(1, sizeof(hostel));
         floor_queue_current = floor_queue_first;
         enter_data_hostel(floor_queue_current);
-        while (1) {
-            if (!settlement(floor_queue_first, settelment_queue_current)) {
-                break;
-            }
-        }
+        while (settlement(floor_queue_first, settelment_queue_current));
         display_hostel(floor_queue_first, settelment_queue_first);
         fclose(file);
         free_queue(settelment_queue_first);
