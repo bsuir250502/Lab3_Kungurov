@@ -118,18 +118,18 @@ void display_hostel(hostel * floor_queue_first,
 
 void free_hostel(hostel * pointer)
 {
-    if (pointer->next != NULL) {
+    if (pointer) {
         free_hostel(pointer->next);
+        free(pointer);
     }
-    free(pointer);
 }
 
 void free_queue(queue * pointer)
 {
-    if (pointer->next != NULL) {
+    if (pointer) {
         free_queue(pointer->next);
+        free(pointer);
     }
-    free(pointer);
 }
 
 int main(int argc, char **argv)
