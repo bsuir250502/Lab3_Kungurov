@@ -63,18 +63,14 @@ FILE *file;
             floor_queue_current = floor_queue_current->next;
         }
         if (floor_queue_current->next == NULL) {
-            while (1) {
-                if (settelment_queue_current->next == NULL) {
-                    strcpy(settelment_queue_current->surname, str1);
+            while(settelment_queue_current->next != NULL) {
+                    settelment_queue_current =
+                        settelment_queue_current->next;
+            }
+            strcpy(settelment_queue_current->surname, str1);
                     settelment_queue_current =
                         settelment_queue_current->next =
                         (queue *) calloc(1, sizeof(queue));
-                    break;
-                } else {
-                    settelment_queue_current =
-                        settelment_queue_current->next;
-                }
-            }
             free(str1);
             return 1;
         } else {
