@@ -35,7 +35,7 @@ FILE *file;
             enter_info(&floor_queue_current->free_places);
             for (j = 0; floor_queue_current->free_places != 0; j++) {
                 my_fgets(str, size_surname, file);
-                if (strcmp("end\n", str) == 0) {
+                if (strcmp("end", str) == 0) {
                     break;
                 }
                 strcpy(floor_queue_current->list[j], str);
